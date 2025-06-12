@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Feliz Dia dos Namorados, Amor!</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js" integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq" crossorigin="anonymous"></script>
+     <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to bottom right, #ffe0f0, #ffd1dc);
+      color: #333;
+      text-align: center;
+      padding: 2rem;
+    }
+    h1 {
+      font-size: 2.5rem;
+      color: #d63384;
+    }
+    #quiz {
+      background: white;
+      max-width: 600px;
+      margin: 2rem auto;
+      padding: 2rem;
+      border-radius: 15px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    .answers button {
+      background: #ff69b4;
+      border: none;
+      color: white;
+      padding: 0.8rem 1.5rem;
+      margin: 0.5rem;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: 0.4s;
+      font-size: 1rem;
+      position: relative;
+    }
+
+    .answers button:hover {
+      transform: scale(1.1);
+    }
+
+    .answers button.correct {
+      background-color: #28a745 !important;
+      transform: scale(1.05);
+    }
+
+    .answers button.correct::after {
+      content: '✔';
+      color: white;
+      position: absolute;
+      right: 10px;
+      top: 10px;
+      font-size: 1.4rem;
+    }
+
+    .answers button.wrong {
+      background-color: #dc3545 !important;
+      transform: scale(0.98);
+    }
+
+    .answers button.wrong::after {
+      content: '✘';
+      color: white;
+      position: absolute;
+      right: 10px;
+      top: 10px;
+      font-size: 1.4rem;
+    }
+
+    #result {
+      font-size: 1.5rem;
+      margin-top: 1.5rem;
+      color: #28a745;
+    }
+    #result {
+      font-size: 1.3rem;
+      margin-top: 1.5rem;
+      color: #28a745;
+    }
+    #photos {
+      margin-top: 2rem;
+    }
+    #photos img {
+      width: 150px;
+      height: auto;
+      border-radius: 10px;
+      margin: 10px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+
+    }
+
+   .foto-com-moldura {
+  border: 6px solid white;
+  border-radius: 15px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  padding: 5px;
+  background: #fff;
+  transition: transform 0.3s ease;
+}
+
+.foto-com-moldura:hover {
+  transform: scale(1.05);
+}
+
+    #surprise, #declaration {
+      margin-top: 2rem;
+      display: none;
+      font-size: 1.2rem;
+      background-color: #ffe0f0;
+      padding: 1.5rem;
+      border-radius: 10px;
+    }
+    .action-button {
+      display: none;
+      margin-top: 1rem;
+      background-color: #d63384;
+      color: white;
+      padding: 0.7rem 1.2rem;
+      border-radius: 10px;
+      text-decoration: none;
+      transition: background 0.3s;
+    }
+    .action-button:hover {
+      background-color: #a81f5a;
+    }
+    #present-reveal {
+      display: none;
+      margin-top: 1rem;
+      background: #fff;
+      padding: 1rem;
+      border-radius: 10px;
+      color: #d63384;
+      font-weight: bold;
+    }
+
+    #reset-btn {
+  background-color: #ff69b4; /* rosa vibrante */
+  color: white;
+  border: none;
+  border-radius: 25px;
+  padding: 12px 24px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+#reset-btn:hover {
+  background-color: #ff85c1;
+  transform: scale(1.05);
+}
+
+.bg_hearts {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: -1;
+}
+.heart {
+  position: absolute;
+  width: 25px;
+  height: 25px;
+  background-image: url('https://cdn-icons-png.flaticon.com/512/833/833472.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  animation: float 6s ease-in-out infinite;
+  opacity: 0.7;
+  z-index: -1;
+}
+
+
+.heart::before {
+  width: 15px;
+  height: 15px;
+  top: -7.5px;
+  left: 0;
+}
+
+.heart::after {
+  width: 15px;
+  height: 15px;
+  top: 0;
+  left: 7.5px;
+}
+
+@keyframes floatAround {
+  0% {
+    transform: translate(0, 0) rotate(-45deg);
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    transform: translate(calc(-50px + 100px * random()), calc(-50px + 100px * random())) rotate(-45deg);
+    opacity: 0;
+  }
+}
+
+.voltar {
+  display: inline-block;
+  margin-top: 2rem;
+  background-color: #fff;
+  color: #d63384;
+  padding: 0.8rem 1.8rem;
+  border-radius: 30px;
+  font-size: 1rem;
+  text-decoration: none;
+  font-weight: bold;
+  border: 2px solid #d63384;
+  transition: all 0.3s ease;
+}
+
+.voltar:hover {
+  background-color: #d63384;
+  color: #fff;
+  transform: scale(1.05);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+  </style>
+</head>
+<body>
+  <div class="bg_hearts"></div>
+  <h1 data-aos="fade-down" data-aos-duration="1000">Feliz Dias dos Namorados, Meu Amor! 💖</h1>
+
+<p data-aos="fade-up" data-aos-delay="200" data-aos-duration="1000">
+  Preparei um quiz especial só para você. Vamos ver o quanto você lembra da nossa história? 😍
+</p>
+
+<div id="quiz" data-aos="zoom-in" data-aos-delay="400" data-aos-duration="1000">
+  <div class="question" id="question">Carregando pergunta...</div>
+  <div class="answers" id="answers"></div>
+  <div id="result"></div>
+</div>
+
+   <button onclick="resetQuiz()" id="reset-btn" style="display: none;">🔄 Recomeçar</button>
+  
+
+  <div id="photos" data-aos="fade-up" data-aos-duration="1000">
+  <h2 data-aos="fade-down" data-aos-delay="100">Nossas lembranças 📸</h2>
+  <img src="foto1.jpeg" class="foto-com-moldura" alt="Foto 1" data-aos="zoom-in" data-aos-delay="200">
+  <img src="foto2.jpeg" class="foto-com-moldura" alt="Foto 2" data-aos="zoom-in" data-aos-delay="400">
+  <img src="foto3.jpeg" class="foto-com-moldura" alt="Foto 3" data-aos="zoom-in" data-aos-delay="600">
+</div>
+
+  <div id="surprise">
+    <h2>🎉 Você Concluiu o Quiz! 🎉</h2>
+    <p>Parabéns, meu amor! Você respondeu tudo com carinho e atenção. Agora, prepare-se para uma revelação especial... 💝</p>
+    </div>
+    <br>
+    <a class="action-button" href="declaracao.html">Ler minha declaração 💌</a>
+  </div>
+
+  </div>
+    <a class="voltar" href="inicial.html" data-aos="fade-up" data-aos-delay="800">Voltar</a>
+  </div>
+<script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+  <script>
+    const quiz = [
+      {
+        question: "Onde foi o nosso primeiro encontro?",
+        answers: ["Cinema", "Restaurante", "Metro", "Role"],
+        correct: "Cinema"
+      },
+      {
+        question: "Qual é a minha comida favorita?",
+        answers: ["Pizza", "Sushi", "Batata Frita", "Hambúrguer"],
+        correct: "Batata Frita"
+      },
+      {
+        question: "Qual vai ser a nossa primeira viagem juntos?",
+        answers: ["Campos do Jordão", "Gramado", "Rio de Janeiro", "Ubatuba"],
+        correct: "Campos do Jordão"
+      },
+      {
+        question: "Qual música é a musica que nos marca?",
+        answers: ["Luz que me traz paz - Maneva", "Aliança - Tribalistas", "Afrodite - Delacruz", "Sunshine - Delacruz"],
+        correct: "Afrodite - Delacruz"
+      },
+
+       {
+        question: "O que comemos no nosso primeiro date?",
+        answers: ["Pipoca", "Massa", "Mc Donalds", "Nada"],
+        correct: "Mc Donalds"
+      },
+
+       {
+        question: "Qual foi o dia exato em que nos vimos pela primeira vez?",
+        answers: ["16/08/2024", "12/08/2024", "17/08/2024", "13/08/2024"],
+        correct: "12/08/2024"
+      },
+
+       {
+        question: "O que eu respondi no seu story que te fez conversar comigo?",
+        answers: ["Passei uma cantada", "Elogiei", "Falei qualquer coisa", "Chamei de Princesa"],
+        correct: "Chamei de Princesa"
+      },
+
+       {
+        question: "Quem falou eu te amo primeiro?",
+        answers: ["Lelets", "Leticia", "Le", "Lele"],
+        correct: "Lelets"
+      },
+
+      {
+        question: "Onde comemoramos nosso primeiro mês juntos?",
+        answers: ["ZDeli Sandwich", "Mc Donalds", "Outback", "Não lembro"],
+        correct: "ZDeli Sandwich"
+      },
+
+      {
+        question: "Onde foi nosso primeiro rolê juntos?",
+        answers: ["Beco do Espeto", "Beco XX", "Motel", "Aquele bar chato da Giovanna"],
+        correct: "Aquele bar chato da Giovanna"
+      },
+
+      {
+        question: "Qual o lugar mais estranhos que trans...?",
+        answers: ["HB20", "Sua cozinha", "Casa da sua Vó", "Banheiro Peruibe"],
+        correct: "Banheiro Peruibe"
+      },
+
+       {
+        question: "Qual o primeiro presentinho que te dei?",
+        answers: ["Açai", "Flores", "Chocolate", "Ursinho"],
+        correct: "Açai"
+      },
+
+       {
+        question: "Por fim, você me ama?",
+        answers: ["Sim", "Não", "Eca", "Nhe"],
+        correct: "Eca"
+      }
+      
+    ];
+
+
+
+    let currentQuestion = 0;
+    let score = 0;
+
+    function loadQuestion() {
+      const q = quiz[currentQuestion];
+      document.getElementById("question").textContent = q.question;
+      const answersDiv = document.getElementById("answers");
+      answersDiv.innerHTML = "";
+
+      q.answers.forEach(answer => {
+        const btn = document.createElement("button");
+        btn.textContent = answer;
+        btn.onclick = () => checkAnswer(answer, btn);
+        answersDiv.appendChild(btn);
+      });
+    }
+
+    function checkAnswer(selected, button) {
+  const correct = quiz[currentQuestion].correct;
+  const buttons = document.querySelectorAll(".answers button");
+
+  buttons.forEach(btn => {
+    btn.disabled = true;
+    if (btn.textContent === correct) {
+      btn.classList.add("correct");
+    } else if (btn.textContent === selected) {
+      btn.classList.add("wrong");
+    }
+  });
+
+  // 👉 Mostrar botão de reset após a primeira pergunta
+  if (currentQuestion === 0) {
+    document.getElementById("reset-btn").style.display = "inline-block";
+  }
+
+  if (selected === correct) score++;
+
+  currentQuestion++;
+  setTimeout(() => {
+    if (currentQuestion < quiz.length) {
+      loadQuestion();
+    } else {
+      showResult();
+    }
+  }, 1200);
+}
+
+ function showResult() {
+  document.getElementById("question").textContent = "Resultado:";
+  document.getElementById("answers").innerHTML = "";
+  document.getElementById("result").textContent = `Você acertou ${score} de ${quiz.length} perguntas! 💕`;
+
+  // Mostra a mensagem surpresa
+  document.getElementById("surprise").style.display = "block";
+
+  // Mostra o botão de declaração (💌)
+  const actionButton = document.querySelector(".action-button");
+  if (actionButton) {
+    actionButton.style.display = "inline-block";
+  }
+
+  // Mostra o botão de reset
+  document.getElementById("reset-btn").style.display = "inline-block";
+
+  // Rola até o final da página
+  window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+}
+
+
+
+    function revealPresent() {
+      document.getElementById("present-reveal").style.display = "block";
+    }
+
+    loadQuestion();
+
+    function resetQuiz() {
+  currentQuestion = 0;
+  score = 0;
+  document.getElementById("result").textContent = "";
+  document.getElementById("surprise").style.display = "none";
+  document.getElementById("reset-btn").style.display = "none";
+  loadQuestion();
+}
+
+const container = document.querySelector('.bg_hearts');
+
+  function makeHeart() {
+    const heart = document.createElement('div');
+    heart.classList.add('heart');
+
+    const size = Math.random() * 20 + 10;
+    heart.style.width = heart.style.height = `${size}px`;
+
+    heart.style.top = `${Math.random() * 100}%`;
+    heart.style.left = `${Math.random() * 100}%`;
+    heart.style.position = 'absolute';
+
+    heart.style.animationDuration = `${4 + Math.random() * 4}s`;
+
+    container.appendChild(heart);
+
+    setTimeout(() => heart.remove(), 8000);
+  }
+
+  setInterval(makeHeart, 200);
+
+    function revealGift() {
+      document.getElementById("gift").style.display = "block";
+    }
+    
+    AOS.init({
+    duration: 800,
+    once: true
+  });
+  </script>
+</body>
+</html>
