@@ -92,7 +92,7 @@
 <body>
 
 <!-- Vídeo acionado automaticamente -->
-<video id="bgVideo" autoplay loop playsinline>
+<video id="bgVideo" autoplay muted loop playsinline>
   <source src="video.mp4" type="video/mp4">
   Seu navegador não suporta vídeo.
 </video>
@@ -132,6 +132,13 @@
       playIcon.innerHTML = '<polygon points="30,20 60,40 30,60"></polygon>';
     }
   });
+
+    const video = document.getElementById('bgVideo');
+
+  document.body.addEventListener('click', () => {
+    video.muted = false;
+    video.play();
+  }, { once: true });
 </script>
 
 </body>
